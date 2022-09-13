@@ -36,13 +36,13 @@ class DeployExecutableByteSerializerTest extends AnyFunSuite {
   test("Test serialize storedVersionedContractByHash ") {
     val args: DeployNamedArg = new DeployNamedArg("test", CLValue.String("Hello, World!"))
     val storedVersionedContractByHash = new StoredVersionedContractByHash(Some(new Hash("b348fdd0d0b3f66468687df93141b5924f6bb957d5893c08b60d5a78d0b9a423")), None, "PsLz5c7JsqT8BK8ll0kF", Seq(Seq(args)))
-    assert("03b348fdd0d0b3f66468687df93141b5924f6bb957d5893c08b60d5a78d0b9a42300010000000400000074657374110000000d00000048656c6c6f2c20576f726c64210a" == HexUtils.toHex(serializer.toBytes(storedVersionedContractByHash)).get)
+    assert("03b348fdd0d0b3f66468687df93141b5924f6bb957d5893c08b60d5a78d0b9a423001400000050734c7a3563374a73715438424b386c6c306b46010000000400000074657374110000000d00000048656c6c6f2c20576f726c64210a" == HexUtils.toHex(serializer.toBytes(storedVersionedContractByHash)).get)
   }
 
   test("Test serialize StoredVersionedContractByName ") {
     val args: DeployNamedArg = new DeployNamedArg("test", CLValue.String("Hello, World!"))
     val storedVersionedContractByName = new StoredVersionedContractByName("test-contract", None, "PsLz5c7JsqT8BK8ll0kF", Seq(Seq(args)))
-    assert("040d000000746573742d636f6e747261637400010000000400000074657374110000000d00000048656c6c6f2c20576f726c64210a" == HexUtils.toHex(serializer.toBytes(storedVersionedContractByName)).get)
+    assert("040d000000746573742d636f6e7472616374001400000050734c7a3563374a73715438424b386c6c306b46010000000400000074657374110000000d00000048656c6c6f2c20576f726c64210a" == HexUtils.toHex(serializer.toBytes(storedVersionedContractByName)).get)
   }
 
 
