@@ -46,14 +46,23 @@ class DeployExecutableByteSerializer extends BytesSerializable[DeployExecutable]
         builder.addAll(storedVersionedContractByHash.hash.get.hash)
         storedVersionedContractByHash.version match {
           case None => builder.addOne(0x00.toByte)
-          case Some(a) => builder.addOne(0x01.toByte).addAll(CLValue.U32(storedVersionedContractByHash.version.get).bytes)
+            .addAll(CLValue.U32(storedVersionedContractByHash.entry_point.getBytes(StandardCharsets.UTF_8).length).bytes)
+            .addAll(storedVersionedContractByHash.entry_point.getBytes(StandardCharsets.UTF_8))
+          case Some(a) => builder.addOne(0x01.toByte)
+            .addAll(CLValue.U32(storedVersionedContractByHash.version.get).bytes)
+            .addAll(CLValue.U32(storedVersionedContractByHash.entry_point.getBytes(StandardCharsets.UTF_8).length).bytes)
+            .addAll(storedVersionedContractByHash.entry_point.getBytes(StandardCharsets.UTF_8))
         }
       }
       case storedVersionedContractByName: StoredVersionedContractByName => {
         builder.addAll(CLValue.String(storedVersionedContractByName.name).bytes)
         storedVersionedContractByName.version match {
           case None => builder.addOne(0x00.toByte)
+            .addAll(CLValue.U32(storedVersionedContractByName.entry_point.getBytes(StandardCharsets.UTF_8).length).bytes)
+            .addAll(storedVersionedContractByName.entry_point.getBytes(StandardCharsets.UTF_8))
           case Some(a) => builder.addOne(0x01.toByte).addAll(CLValue.U32(storedVersionedContractByName.version.get).bytes)
+            .addAll(CLValue.U32(storedVersionedContractByName.entry_point.getBytes(StandardCharsets.UTF_8).length).bytes)
+            .addAll(storedVersionedContractByName.entry_point.getBytes(StandardCharsets.UTF_8))
         }
       }
       case transfer: DeployTransfer =>
